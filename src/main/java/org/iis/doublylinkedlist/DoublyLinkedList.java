@@ -78,7 +78,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             node.next.prev = node.prev;
         }
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new ForwardIterator();
@@ -99,12 +99,12 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         public ForwardIterator() {
             this.current = firstNode;
         }
-        
+
         @Override
         public boolean hasNext() {
             return this.current != null;
         }
-        
+
         @Override
         public T next() {
             if (!this.hasNext()) {
@@ -124,12 +124,12 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         public BackwardIterator() {
             this.current = lastNode;
         }
-        
+
         @Override
         public boolean hasNext() {
             return this.current != null;
         }
-        
+
         @Override
         public T next() {
             if (!this.hasNext()) {
@@ -298,7 +298,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         listStringBuilder.append("]");
         return listStringBuilder.toString();
     }
-    
+
     @Override
     public String toString() {
         return this.stringFromIterator(this.iterator());
