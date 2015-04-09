@@ -1,4 +1,4 @@
-package org.iis.doublyLinkedList;
+package org.iis.doublylinkedlist;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
