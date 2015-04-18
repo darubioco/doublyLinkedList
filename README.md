@@ -1,5 +1,6 @@
 # doublyLinkedList
 Java implementation of a doubly linked list using Maven and SonarQube.
+Basic algorithms from [Wikipedia specification](http://en.wikipedia.org/wiki/Doubly_linked_list).
 
 #### Nested Class Summary
     private class BackwardIterator 
