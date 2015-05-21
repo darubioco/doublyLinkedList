@@ -79,7 +79,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
         }
     }
 
-    @Override
     public Iterator<T> iterator() {
         return new ForwardIterator();
     }
@@ -100,12 +99,10 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             this.current = firstNode;
         }
 
-        @Override
         public boolean hasNext() {
             return this.current != null;
         }
 
-        @Override
         public T next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
@@ -125,12 +122,10 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             this.current = lastNode;
         }
 
-        @Override
         public boolean hasNext() {
             return this.current != null;
         }
 
-        @Override
         public T next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
