@@ -43,7 +43,7 @@ public class DoublyLinkedListTest {
   public void sizeIsXAfterInsertX() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
-      list.add(number);
+      list.addFirst(number);
     }
     assertEquals(numbers.length, list.size());
   }
@@ -216,4 +216,108 @@ public class DoublyLinkedListTest {
     }
     assertEquals(list.lastIndexOf(0), -1);
   }
+  
+  @Test
+  public void occurrencesOfElementReturnsCorrectNumberOfOccurrences(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.occurrences(0), 3);
+  }
+  
+  @Test
+  public void occurrencesOfElementNotPresentReturnsZero(){
+    Integer[] numbers = {1, 2, 3, 4, 5};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.occurrences(0), 0);
+  }
+  
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void removeNodeAtIndexThrowsNoSuchElementExceptionEmptyList() {
+    list.removeNodeAtIndex(0);
+  }
+  
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void removeNodeAtNegativeIndexThrowsNoSuchElementException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.removeNodeAtIndex(-2);
+  }
+
+  @Test
+  public void removeNodeAtIndexDecreasesSizeInOne() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    int listSize = list.size();
+    list.removeNodeAtIndex(0);
+    assertEquals(listSize - 1, list.size());
+  }
+  
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void removeFirstOccurrenceOfElementNotPresentThrowsNoSuchElementException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.removeFirstOccurrence(0);
+  }
+  
+  @Test
+  public void removeFirstOccurrenceDecreasesSizeInOne() {
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    int listSize = list.size();
+    list.removeFirstOccurrence(0);
+    assertEquals(listSize - 1, list.size());
+  }
+  
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void removeLastOccurrenceOfElementNotPresentThrowsNoSuchElementException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.removeLastOccurrence(0);
+  }
+  
+  @Test
+  public void removeLastOccurrenceDecreasesSizeInOne() {
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    int listSize = list.size();
+    list.removeLastOccurrence(0);
+    assertEquals(listSize - 1, list.size());
+  }
+  
+  @Test
+  public void sublistFromZeroToSizeMinusOneReturnsSameList(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    DoublyLinkedList<Integer> list1 = list.sublist(0, list.size()-1);
+    assertEquals(list.size(), list1.size());
+  }
+  
+  @Test
+  public void sublistWithSizeOneReturnsCorrectElement(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    DoublyLinkedList<Integer> list1 = list.sublist(0, 0);
+    assertEquals(list.get(0), list1.get(0));
+  }
+  
 }
