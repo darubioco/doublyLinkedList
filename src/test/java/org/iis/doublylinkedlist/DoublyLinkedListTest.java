@@ -2,6 +2,8 @@ package org.iis.doublylinkedlist;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,12 +49,12 @@ public class DoublyLinkedListTest {
   }
 
   @Test(expected = NullPointerException.class)
-  public void getFirstThrowNullPointerExceptionEmptyList() {
+  public void getFirstThrowsNullPointerExceptionEmptyList() {
     list.getFirst();
   }
 
   @Test(expected = NullPointerException.class)
-  public void getLastThrowNullPointerExceptionEmptyList() {
+  public void getLastThrowsNullPointerExceptionEmptyList() {
     list.getLast();
   }
 
@@ -81,5 +83,137 @@ public class DoublyLinkedListTest {
     list1.addFirst(1);
     assertEquals(list.size(), list1.size());
     assertEquals(list.get(0), list1.get(0));
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void removeFirstThrowsNoSuchElementExceptionEmptyList() {
+    list.removeFirst();
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void removeLastThrowsNoSuchElementExceptionEmptyList() {
+    list.removeLast();
+  }
+
+  @Test
+  public void removeFirstDecreasesSizeInOne() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    int listSize = list.size();
+    list.removeFirst();
+    assertEquals(listSize - 1, list.size());
+  }
+
+  @Test
+  public void removeLastDecreasesSizeInOne() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    int listSize = list.size();
+    list.removeLast();
+    assertEquals(listSize - 1, list.size());
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void getWithNegativePositionThrowsIndexOutOfBoundsException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.get(-1);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void getWithPositionGreaterThanSizeThrowsIndexOutOfBoundsException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.get(10);
+  }
+
+  @Test
+  public void getElementWithPositionZeroEqualsToGetFirst() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.getFirst(), list.get(0));
+  }
+  
+  @Test
+  public void getElementWithPositionSizeMinusOneEqualsToGetLast() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.getLast(), list.get(list.size()-1));
+  }
+  
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void setWithNegativePositionThrowsIndexOutOfBoundsException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.set(-1, 0);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void setWithPositionGreaterThanSizeThrowsIndexOutOfBoundsException() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.set(10, 0);
+  }
+  
+  @Test
+  public void setElementWithPositionXChangesElementAtPositionX() {
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    list.set(1, 0);
+    assertEquals(list.get(1), Integer.valueOf(0));
+  }
+  
+  @Test
+  public void firstIndexOfElementReturnsCorrectPosition(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.firstIndexOf(0), 1);
+  }
+  
+  @Test
+  public void firstIndexOfElementNotPresentReturnsMinusOne(){
+    Integer[] numbers = {1, 2, 3, 4, 5};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.firstIndexOf(0), -1);
+  }
+  
+  @Test
+  public void lastIndexOfElementReturnsCorrectPosition(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.lastIndexOf(0), 5);
+  }
+  
+  @Test
+  public void lastIndexOfElementNotPresentReturnsMinusOne(){
+    Integer[] numbers = {1, 2, 3, 4, 5};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    assertEquals(list.lastIndexOf(0), -1);
   }
 }
