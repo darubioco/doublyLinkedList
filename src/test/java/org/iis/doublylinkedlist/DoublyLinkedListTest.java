@@ -2,6 +2,7 @@ package org.iis.doublylinkedlist;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -318,6 +319,87 @@ public class DoublyLinkedListTest {
     }
     DoublyLinkedList<Integer> list1 = list.sublist(0, 0);
     assertEquals(list.get(0), list1.get(0));
+  }
+  
+  @Test
+  public void reverseListWithEmptyListReturnsEmptyList(){
+    DoublyLinkedList<Integer> list1 = list.reverseList();
+    assertTrue(list1.isEmpty());
+  }
+  
+  @Test
+  public void reverseListReturnsReversedList(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    DoublyLinkedList<Integer> list1 = list.reverseList();
+    assertEquals(list.get(0), list1.get(list1.size()-1));
+  }
+  
+  @Test
+  public void toArrayReturnsCorrectArray(){
+    Integer[] numbers = {1, 0, 3, 0, 5, 0};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    Object[] listToArray = list.toArray();
+    Integer[] integerArray = Arrays.copyOf(listToArray, listToArray.length, Integer[].class);
+    assertArrayEquals(numbers, integerArray);
+  }
+  
+  @Test
+  public void toStringReturnsCorrectStringEmptyList(){
+    String expectedResult = "[]";
+    String listString = list.toString();
+    assertTrue(expectedResult.equals(listString));
+  }
+  
+  @Test
+  public void toStringReturnsCorrectStringNonEmptyList(){
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    String expectedResult = "[1, 2, 3, 4]";
+    String listString = list.toString();
+    assertTrue(expectedResult.equals(listString));
+  }
+  
+  @Test
+  public void toStringReturnsSameStringAsForwardString(){
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    String listToString = list.toString();
+    String listForwardString = list.forwardString();
+    assertEquals(listToString, listForwardString);
+  }
+  
+  @Test
+  public void toStringReturnsSameStringAsForwardStringEmptyList(){
+    String listToString = list.toString();
+    String listForwardString = list.forwardString();
+    assertEquals(listToString, listForwardString);
+  }
+  
+  @Test
+  public void backwardStringReturnsCorrectStringEmptyList(){
+    String expectedResult = "[]";
+    String listString = list.backwardString();
+    assertTrue(expectedResult.equals(listString));
+  }
+  
+  @Test
+  public void backwardStringReturnsCorrectStringNonEmptyList(){
+    Integer[] numbers = {1, 2, 3, 4};
+    for (Integer number : numbers) {
+      list.add(number);
+    }
+    String expectedResult = "[4, 3, 2, 1]";
+    String listString = list.backwardString();
+    assertTrue(expectedResult.equals(listString));
   }
   
 }
