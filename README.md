@@ -49,4 +49,8 @@ Basic algorithms from [Wikipedia specification](http://en.wikipedia.org/wiki/Dou
     + Object[] toArray() 
     + String toString() 
     
-Introducción a la Ingeniería del Software - **David Rubio Cortés (SW-A)**
+JaCoCo coverage report is in folder jacoco. Use [htmlpreview.github.io](http://htmlpreview.github.io/?https://raw.githubusercontent.com/davidrubio/DoublyLinkedList/master/Jacoco%20Report/index.html) to have a look at the results in your web browser, or check the screenshots in the root of the repo. You can generate your own report by running "mvn install".    
+
+Implementation by **David Rubio Cortés (SW-A)**
+
+JUnit testing by **Carlos Morente Lozano (SW-A)**
