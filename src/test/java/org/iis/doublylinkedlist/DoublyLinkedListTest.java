@@ -44,7 +44,7 @@ public class DoublyLinkedListTest {
   public void sizeIsXAfterInsertX() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
-      list.add(number);
+      list.addFirst(number);
     }
     assertEquals(numbers.length, list.size());
   }
@@ -144,16 +144,16 @@ public class DoublyLinkedListTest {
     }
     assertEquals(list.getFirst(), list.get(0));
   }
-  
+
   @Test
   public void getElementWithPositionSizeMinusOneEqualsToGetLast() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
       list.add(number);
     }
-    assertEquals(list.getLast(), list.get(list.size()-1));
+    assertEquals(list.getLast(), list.get(list.size() - 1));
   }
-  
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void setWithNegativePositionThrowsIndexOutOfBoundsException() {
     Integer[] numbers = {1, 2, 3, 4};
@@ -171,7 +171,7 @@ public class DoublyLinkedListTest {
     }
     list.set(10, 0);
   }
-  
+
   @Test
   public void setElementWithPositionXChangesElementAtPositionX() {
     Integer[] numbers = {1, 2, 3, 4};
@@ -181,67 +181,66 @@ public class DoublyLinkedListTest {
     list.set(1, 0);
     assertEquals(list.get(1), Integer.valueOf(0));
   }
-  
+
   @Test
-  public void firstIndexOfElementReturnsCorrectPosition(){
+  public void firstIndexOfElementReturnsCorrectPosition() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.firstIndexOf(0), 1);
   }
-  
+
   @Test
-  public void firstIndexOfElementNotPresentReturnsMinusOne(){
+  public void firstIndexOfElementNotPresentReturnsMinusOne() {
     Integer[] numbers = {1, 2, 3, 4, 5};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.firstIndexOf(0), -1);
   }
-  
+
   @Test
-  public void lastIndexOfElementReturnsCorrectPosition(){
+  public void lastIndexOfElementReturnsCorrectPosition() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.lastIndexOf(0), 5);
   }
-  
+
   @Test
-  public void lastIndexOfElementNotPresentReturnsMinusOne(){
+  public void lastIndexOfElementNotPresentReturnsMinusOne() {
     Integer[] numbers = {1, 2, 3, 4, 5};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.lastIndexOf(0), -1);
   }
-<<<<<<< HEAD
-  
+
   @Test
-  public void occurrencesOfElementReturnsCorrectNumberOfOccurrences(){
+  public void occurrencesOfElementReturnsCorrectNumberOfOccurrences() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.occurrences(0), 3);
   }
-  
+
   @Test
-  public void occurrencesOfElementNotPresentReturnsZero(){
+  public void occurrencesOfElementNotPresentReturnsZero() {
     Integer[] numbers = {1, 2, 3, 4, 5};
     for (Integer number : numbers) {
       list.add(number);
     }
     assertEquals(list.occurrences(0), 0);
   }
-  
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void removeNodeAtIndexThrowsNoSuchElementExceptionEmptyList() {
     list.removeNodeAtIndex(0);
   }
-  
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void removeNodeAtNegativeIndexThrowsNoSuchElementException() {
     Integer[] numbers = {1, 2, 3, 4};
@@ -261,7 +260,7 @@ public class DoublyLinkedListTest {
     list.removeNodeAtIndex(0);
     assertEquals(listSize - 1, list.size());
   }
-  
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void removeFirstOccurrenceOfElementNotPresentThrowsNoSuchElementException() {
     Integer[] numbers = {1, 2, 3, 4};
@@ -270,7 +269,7 @@ public class DoublyLinkedListTest {
     }
     list.removeFirstOccurrence(0);
   }
-  
+
   @Test
   public void removeFirstOccurrenceDecreasesSizeInOne() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
@@ -281,7 +280,7 @@ public class DoublyLinkedListTest {
     list.removeFirstOccurrence(0);
     assertEquals(listSize - 1, list.size());
   }
-  
+
   @Test(expected = IndexOutOfBoundsException.class)
   public void removeLastOccurrenceOfElementNotPresentThrowsNoSuchElementException() {
     Integer[] numbers = {1, 2, 3, 4};
@@ -290,7 +289,7 @@ public class DoublyLinkedListTest {
     }
     list.removeLastOccurrence(0);
   }
-  
+
   @Test
   public void removeLastOccurrenceDecreasesSizeInOne() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
@@ -301,19 +300,19 @@ public class DoublyLinkedListTest {
     list.removeLastOccurrence(0);
     assertEquals(listSize - 1, list.size());
   }
-  
+
   @Test
-  public void sublistFromZeroToSizeMinusOneReturnsSameList(){
+  public void sublistFromZeroToSizeMinusOneReturnsSameList() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
     }
-    DoublyLinkedList<Integer> list1 = list.sublist(0, list.size()-1);
+    DoublyLinkedList<Integer> list1 = list.sublist(0, list.size() - 1);
     assertEquals(list.size(), list1.size());
   }
-  
+
   @Test
-  public void sublistWithSizeOneReturnsCorrectElement(){
+  public void sublistWithSizeOneReturnsCorrectElement() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
@@ -321,25 +320,25 @@ public class DoublyLinkedListTest {
     DoublyLinkedList<Integer> list1 = list.sublist(0, 0);
     assertEquals(list.get(0), list1.get(0));
   }
-  
+
   @Test
-  public void reverseListWithEmptyListReturnsEmptyList(){
+  public void reverseListWithEmptyListReturnsEmptyList() {
     DoublyLinkedList<Integer> list1 = list.reverseList();
     assertTrue(list1.isEmpty());
   }
-  
+
   @Test
-  public void reverseListReturnsReversedList(){
+  public void reverseListReturnsReversedList() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
     }
     DoublyLinkedList<Integer> list1 = list.reverseList();
-    assertEquals(list.get(0), list1.get(list1.size()-1));
+    assertEquals(list.get(0), list1.get(list1.size() - 1));
   }
-  
+
   @Test
-  public void toArrayReturnsCorrectArray(){
+  public void toArrayReturnsCorrectArray() {
     Integer[] numbers = {1, 0, 3, 0, 5, 0};
     for (Integer number : numbers) {
       list.add(number);
@@ -348,16 +347,16 @@ public class DoublyLinkedListTest {
     Integer[] integerArray = Arrays.copyOf(listToArray, listToArray.length, Integer[].class);
     assertArrayEquals(numbers, integerArray);
   }
-  
+
   @Test
-  public void toStringReturnsCorrectStringEmptyList(){
+  public void toStringReturnsCorrectStringEmptyList() {
     String expectedResult = "[]";
     String listString = list.toString();
     assertTrue(expectedResult.equals(listString));
   }
-  
+
   @Test
-  public void toStringReturnsCorrectStringNonEmptyList(){
+  public void toStringReturnsCorrectStringNonEmptyList() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
       list.add(number);
@@ -366,9 +365,9 @@ public class DoublyLinkedListTest {
     String listString = list.toString();
     assertTrue(expectedResult.equals(listString));
   }
-  
+
   @Test
-  public void toStringReturnsSameStringAsForwardString(){
+  public void toStringReturnsSameStringAsForwardString() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
       list.add(number);
@@ -377,23 +376,23 @@ public class DoublyLinkedListTest {
     String listForwardString = list.forwardString();
     assertEquals(listToString, listForwardString);
   }
-  
+
   @Test
-  public void toStringReturnsSameStringAsForwardStringEmptyList(){
+  public void toStringReturnsSameStringAsForwardStringEmptyList() {
     String listToString = list.toString();
     String listForwardString = list.forwardString();
     assertEquals(listToString, listForwardString);
   }
-  
+
   @Test
-  public void backwardStringReturnsCorrectStringEmptyList(){
+  public void backwardStringReturnsCorrectStringEmptyList() {
     String expectedResult = "[]";
     String listString = list.backwardString();
     assertTrue(expectedResult.equals(listString));
   }
-  
+
   @Test
-  public void backwardStringReturnsCorrectStringNonEmptyList(){
+  public void backwardStringReturnsCorrectStringNonEmptyList() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
       list.add(number);
@@ -402,7 +401,5 @@ public class DoublyLinkedListTest {
     String listString = list.backwardString();
     assertTrue(expectedResult.equals(listString));
   }
-  
-=======
->>>>>>> parent of c3bc435... Code covered at 80,0% with unit testing
+
 }

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DoublyLinkedList.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">DoublyLinkedListTest (22-may-2015 14:39:32)</a> &gt; <a href="../../index.html" class="el_group">doublyLinkedList</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">org.iis.doublylinkedlist</a> &gt; <span class="el_source">DoublyLinkedList.java</span></div><h1>DoublyLinkedList.java</h1><pre class="source lang-java linenums">package org.iis.doublylinkedlist;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class DoublyLinkedList&lt;T&gt; implements Iterable&lt;T&gt; {
+    private static class DoublyLinkedNode&lt;E&gt; {
+        private E elem;
+        private DoublyLinkedNode&lt;E&gt; prev, next;
+
+<span class="fc" id="L11">        public DoublyLinkedNode(E elem, DoublyLinkedNode&lt;E&gt; prev,</span>
+                DoublyLinkedNode&lt;E&gt; next) {
+<span class="fc" id="L13">            this.elem = elem;</span>
+<span class="fc" id="L14">            this.prev = prev;</span>
+<span class="fc" id="L15">            this.next = next;</span>
+<span class="fc" id="L16">        }</span>
+    }
+
+    private DoublyLinkedNode&lt;T&gt; firstNode, lastNode;
+
+<span class="fc" id="L21">    public DoublyLinkedList() {</span>
+<span class="fc" id="L22">        this.firstNode = null;</span>
+<span class="fc" id="L23">        this.lastNode = null;</span>
+<span class="fc" id="L24">    }</span>
+
+    private void insertAfter(DoublyLinkedNode&lt;T&gt; node,
+            DoublyLinkedNode&lt;T&gt; newNode) {
+<span class="fc" id="L28">        newNode.prev = node;</span>
+<span class="fc" id="L29">        newNode.next = node.next;</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (node.next == null) {</span>
+<span class="fc" id="L31">            this.lastNode = newNode;</span>
+<span class="fc" id="L32">        } else {</span>
+<span class="nc" id="L33">            node.next.prev = newNode;</span>
+        }
+<span class="fc" id="L35">        node.next = newNode;</span>
+<span class="fc" id="L36">    }</span>
+
+    private void insertBefore(DoublyLinkedNode&lt;T&gt; node,
+            DoublyLinkedNode&lt;T&gt; newNode) {
+<span class="fc" id="L40">        newNode.prev = node.prev;</span>
+<span class="fc" id="L41">        newNode.next = node;</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (node.prev == null) {</span>
+<span class="fc" id="L43">            this.firstNode = newNode;</span>
+<span class="fc" id="L44">        } else {</span>
+<span class="nc" id="L45">            node.prev.next = newNode;</span>
+        }
+<span class="fc" id="L47">        node.prev = newNode;</span>
+<span class="fc" id="L48">    }</span>
+
+    private void insertBeginning(DoublyLinkedNode&lt;T&gt; newNode) {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (this.firstNode == null) {</span>
+<span class="fc" id="L52">            this.firstNode = newNode;</span>
+<span class="fc" id="L53">            this.lastNode = newNode;</span>
+<span class="fc" id="L54">            newNode.prev = null;</span>
+<span class="fc" id="L55">            newNode.next = null;</span>
+<span class="fc" id="L56">        } else {</span>
+<span class="fc" id="L57">            this.insertBefore(this.firstNode, newNode);</span>
+        }
+<span class="fc" id="L59">    }</span>
+
+    private void insertEnd(DoublyLinkedNode&lt;T&gt; newNode) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (this.firstNode == null) {</span>
+<span class="fc" id="L63">            this.insertBeginning(newNode);</span>
+<span class="fc" id="L64">        } else {</span>
+<span class="fc" id="L65">            this.insertAfter(this.lastNode, newNode);</span>
+        }
+<span class="fc" id="L67">    }</span>
+
+    private void remove(DoublyLinkedNode&lt;T&gt; node) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (node.prev == null) {</span>
+<span class="fc" id="L71">            this.firstNode = node.next;</span>
+<span class="fc" id="L72">        } else {</span>
+<span class="fc" id="L73">            node.prev.next = node.next;</span>
+        }
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (node.next == null) {</span>
+<span class="fc" id="L76">            this.lastNode = node.prev;</span>
+<span class="fc" id="L77">        } else {</span>
+<span class="fc" id="L78">            node.next.prev = node.prev;</span>
+        }
+<span class="fc" id="L80">    }</span>
+
+    public Iterator&lt;T&gt; iterator() {
+<span class="fc" id="L83">        return new ForwardIterator();</span>
+    }
+
+    public Iterator&lt;T&gt; forwardIterator() {
+<span class="fc" id="L87">        return new ForwardIterator();</span>
+    }
+
+    public Iterator&lt;T&gt; backwardIterator() {
+<span class="fc" id="L91">        return new BackwardIterator();</span>
+    }
+
+    private class ForwardIterator implements Iterator&lt;T&gt; {
+
+        private DoublyLinkedNode&lt;T&gt; current;
+
+<span class="fc" id="L98">        public ForwardIterator() {</span>
+<span class="fc" id="L99">            this.current = firstNode;</span>
+<span class="fc" id="L100">        }</span>
+
+        public boolean hasNext() {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            return this.current != null;</span>
+        }
+
+        public T next() {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (!this.hasNext()) {</span>
+<span class="nc" id="L108">                throw new NoSuchElementException();</span>
+            }
+<span class="fc" id="L110">            T nextElem = this.current.elem;</span>
+<span class="fc" id="L111">            this.current = this.current.next;</span>
+<span class="fc" id="L112">            return nextElem;</span>
+        }
+
+    }
+
+    private class BackwardIterator implements Iterator&lt;T&gt; {
+
+        private DoublyLinkedNode&lt;T&gt; current;
+
+<span class="fc" id="L121">        public BackwardIterator() {</span>
+<span class="fc" id="L122">            this.current = lastNode;</span>
+<span class="fc" id="L123">        }</span>
+
+        public boolean hasNext() {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            return this.current != null;</span>
+        }
+
+        public T next() {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">            if (!this.hasNext()) {</span>
+<span class="nc" id="L131">                throw new NoSuchElementException();</span>
+            }
+<span class="fc" id="L133">            T nextElem = this.current.elem;</span>
+<span class="fc" id="L134">            this.current = this.current.prev;</span>
+<span class="fc" id="L135">            return nextElem;</span>
+        }
+
+    }
+
+    public boolean isEmpty() {
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        return this.firstNode == null;</span>
+    }
+
+    public T getFirst() {
+<span class="fc" id="L145">        return this.firstNode.elem;</span>
+    }
+
+    public T getLast() {
+<span class="fc" id="L149">        return this.lastNode.elem;</span>
+    }
+
+    public void add(T elem) {
+<span class="fc" id="L153">        this.insertEnd(new DoublyLinkedNode&lt;T&gt;(elem, null, null));</span>
+<span class="fc" id="L154">    }</span>
+
+    public void addFirst(T elem) {
+<span class="fc" id="L157">        this.insertBeginning(new DoublyLinkedNode&lt;T&gt;(elem, null, null));</span>
+<span class="fc" id="L158">    }</span>
+
+    public void removeFirst() {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (this.isEmpty()) {</span>
+<span class="fc" id="L162">            throw new NoSuchElementException();</span>
+        }
+<span class="fc" id="L164">        this.remove(this.firstNode);</span>
+<span class="fc" id="L165">    }</span>
+
+    public void removeLast() {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (this.isEmpty()) {</span>
+<span class="fc" id="L169">            throw new NoSuchElementException();</span>
+        }
+<span class="fc" id="L171">        this.remove(this.lastNode);</span>
+<span class="fc" id="L172">    }</span>
+
+    public int size() {
+<span class="fc" id="L175">        int size = 0;</span>
+<span class="fc" id="L176">        Iterator&lt;T&gt; iter = this.iterator();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L178">            iter.next();</span>
+<span class="fc" id="L179">            size++;</span>
+        }
+<span class="fc" id="L181">        return size;</span>
+    }
+
+    private DoublyLinkedNode&lt;T&gt; getNode(int index) {
+<span class="fc bfc" id="L185" title="All 4 branches covered.">        if (index &lt; 0 || index &gt;= this.size()) {</span>
+<span class="fc" id="L186">            throw new IndexOutOfBoundsException();</span>
+        }
+<span class="fc" id="L188">        int position = 0;</span>
+<span class="fc" id="L189">        DoublyLinkedNode&lt;T&gt; node = this.firstNode;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        while (position != index) {</span>
+<span class="fc" id="L191">            node = node.next;</span>
+<span class="fc" id="L192">            position++;</span>
+        }
+<span class="fc" id="L194">        return node;</span>
+    }
+
+    public T get(int index) {
+<span class="fc" id="L198">        return this.getNode(index).elem;</span>
+    }
+
+    public void set(int index, T elem) {
+<span class="fc" id="L202">        this.getNode(index).elem = elem;</span>
+<span class="fc" id="L203">    }</span>
+
+    public int firstIndexOf(T elem) {
+<span class="fc" id="L206">        Iterator&lt;T&gt; iter = this.iterator();</span>
+<span class="fc" id="L207">        T listElem = null;</span>
+<span class="fc" id="L208">        int index = -1;</span>
+<span class="fc bfc" id="L209" title="All 4 branches covered.">        while (iter.hasNext() &amp;&amp; !elem.equals(listElem)) {</span>
+<span class="fc" id="L210">            listElem = iter.next();</span>
+<span class="fc" id="L211">            index++;</span>
+        }
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (!elem.equals(listElem)) {</span>
+<span class="fc" id="L214">            index = -1;</span>
+        }
+<span class="fc" id="L216">        return index;</span>
+    }
+
+    public int lastIndexOf(T elem) {
+<span class="fc" id="L220">        Iterator&lt;T&gt; iter = this.backwardIterator();</span>
+<span class="fc" id="L221">        T listElem = null;</span>
+<span class="fc" id="L222">        int index = this.size();</span>
+<span class="fc bfc" id="L223" title="All 4 branches covered.">        while (iter.hasNext() &amp;&amp; !elem.equals(listElem)) {</span>
+<span class="fc" id="L224">            listElem = iter.next();</span>
+<span class="fc" id="L225">            index--;</span>
+        }
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (!elem.equals(listElem)) {</span>
+<span class="fc" id="L228">            index = -1;</span>
+        }
+<span class="fc" id="L230">        return index;</span>
+    }
+
+    public int occurrences(T elem) {
+<span class="fc" id="L234">        int occurrences = 0;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        for (T listElem : this) {</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">            if (listElem.equals(elem)) {</span>
+<span class="fc" id="L237">                occurrences++;</span>
+            }
+        }
+<span class="fc" id="L240">        return occurrences;</span>
+    }
+
+    public void removeNodeAtIndex(int index) {
+<span class="fc bfc" id="L244" title="All 4 branches covered.">        if (index &lt; 0 || index &gt;= this.size()) {</span>
+<span class="fc" id="L245">            throw new IndexOutOfBoundsException();</span>
+        }
+<span class="fc" id="L247">        this.remove(this.getNode(index));</span>
+<span class="fc" id="L248">    }</span>
+
+    public void removeFirstOccurrence(T elem) {
+<span class="fc" id="L251">        this.removeNodeAtIndex(this.firstIndexOf(elem));</span>
+<span class="fc" id="L252">    }</span>
+
+    public void removeLastOccurrence(T elem) {
+<span class="fc" id="L255">        this.removeNodeAtIndex(this.lastIndexOf(elem));</span>
+<span class="fc" id="L256">    }</span>
+
+    public DoublyLinkedList&lt;T&gt; sublist(int fromIndex, int toIndex) {
+<span class="fc" id="L259">        DoublyLinkedList&lt;T&gt; list = new DoublyLinkedList&lt;T&gt;();</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        for (int i = fromIndex; i &lt;= toIndex; i++) {</span>
+<span class="fc" id="L261">            list.add(this.get(i));</span>
+        }
+<span class="fc" id="L263">        return list;</span>
+    }
+
+    public DoublyLinkedList&lt;T&gt; reverseList() {
+<span class="fc" id="L267">        DoublyLinkedList&lt;T&gt; list = new DoublyLinkedList&lt;T&gt;();</span>
+<span class="fc" id="L268">        Iterator&lt;T&gt; iter = this.backwardIterator();</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L270">            list.add(iter.next());</span>
+        }
+<span class="fc" id="L272">        return list;</span>
+    }
+
+    public Object[] toArray() {
+<span class="fc" id="L276">        Object[] array = new Object[this.size()];</span>
+<span class="fc" id="L277">        int i = 0;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        for (T elem : this) {</span>
+<span class="fc" id="L279">            array[i] = elem;</span>
+<span class="fc" id="L280">            i++;</span>
+        }
+<span class="fc" id="L282">        return array;</span>
+    }
+
+    public String stringFromIterator(Iterator&lt;T&gt; iter) {
+<span class="fc" id="L286">        StringBuilder listStringBuilder = new StringBuilder(&quot;[&quot;);</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L288">            listStringBuilder.append(iter.next());</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L290">                listStringBuilder.append(&quot;, &quot;);</span>
+            }
+        }
+<span class="fc" id="L293">        listStringBuilder.append(&quot;]&quot;);</span>
+<span class="fc" id="L294">        return listStringBuilder.toString();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L299">        return this.stringFromIterator(this.iterator());</span>
+    }
+
+    public String forwardString() {
+<span class="fc" id="L303">        return this.stringFromIterator(this.forwardIterator());</span>
+    }
+
+    public String backwardString() {
+<span class="fc" id="L307">        return this.stringFromIterator(this.backwardIterator());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>DoublyLinkedListTest (22-may-2015 14:39:32)</div></body></html>
