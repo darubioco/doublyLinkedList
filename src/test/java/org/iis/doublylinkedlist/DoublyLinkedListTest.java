@@ -44,7 +44,7 @@ public class DoublyLinkedListTest {
   public void sizeIsXAfterInsertX() {
     Integer[] numbers = {1, 2, 3, 4};
     for (Integer number : numbers) {
-      list.addFirst(number);
+      list.add(number);
     }
     assertEquals(numbers.length, list.size());
   }
@@ -217,6 +217,7 @@ public class DoublyLinkedListTest {
     }
     assertEquals(list.lastIndexOf(0), -1);
   }
+<<<<<<< HEAD
   
   @Test
   public void occurrencesOfElementReturnsCorrectNumberOfOccurrences(){
@@ -402,4 +403,6 @@ public class DoublyLinkedListTest {
     assertTrue(expectedResult.equals(listString));
   }
   
+=======
+>>>>>>> parent of c3bc435... Code covered at 80,0% with unit testing
 }
